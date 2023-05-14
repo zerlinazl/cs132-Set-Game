@@ -43,6 +43,10 @@
 
         refreshBoard();
 
+        // clear score and reenable refresh
+        id("refresh-btn").disabled = false;
+        id("set-count").textContent = "0";
+
         // start timer
         startTimer();
     }
@@ -99,13 +103,10 @@
         let cardName = randAttribs[0];
         cardName = cardName.concat("-", randAttribs[2], "-", randAttribs[1]);
         
-        console.log(cardName);
-
         // check for duplicates
         const board = id("board");
         let duplicate = id(cardName + "-" + randAttribs[3]);
         while (duplicate) {
-            console.log("DUPLICATE");
             randAttribs = generateRandomAttributes(isEasy);
             cardName = randAttribs[0];
             cardName = cardName.concat("-", randAttribs[2], "-", randAttribs[1]);
@@ -163,7 +164,6 @@
             let compare = [];
             for (let c=0; c<3; c++) {
                 // iterate through cards
-                console.log("\t\t\t" + selected.item(c).id.split("-")[attr]);
                 compare.push(selected.item(c).id.split("-")[attr]);
             }
             if (!allSameDiff(compare)){
@@ -178,7 +178,6 @@
      * @param {array} arr: array of strings to find 
      */
     function allSameDiff(arr) {
-        console.log(arr);
         // arr has 3 elements, one from each card
         if (arr[0] === arr[1] && arr[0] === arr[2]) {
             return true;
@@ -251,7 +250,6 @@
             }
 
             if (isASet(selected)) {
-                console.log("SET");
                 // if it is a set
                 // display set message
                 for (let i=0; i < 3; i++) {
@@ -267,7 +265,6 @@
                 msgTimer = setTimeout(replaceCard, 1000);
             }
             else {
-                console.log("NOT A SET");
                 // display not a set message
                 for (let i=0; i < 3; i++) {
                     selected.item(i).classList.add("hide-imgs");
@@ -301,7 +298,6 @@
 
     // returns a card to normal if incorrect set is selected
     function removeMsg() {
-        console.log("remove called");
         let cards = qsa(".hide-imgs");
         for (let i=0; i<3; i++) {
             let c = cards[i];
@@ -310,7 +306,6 @@
         }
         clearTimeout(msgTimer);
         msgTimer = null;
-        console.log("msg removed");
     }
 
     init();
